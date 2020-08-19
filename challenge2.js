@@ -13,7 +13,7 @@
     */
     init: function(elevators, floors) {
         var elevator = elevators[0]; // Let's use the first elevator
-        //working solution for challenge 1
+        //working solution for challenge 2(sometines works)
         // Whenever the elevator is idle (has no more queued destinations) ...
         elevator.on("idle", function() 
         {
@@ -21,6 +21,8 @@
             elevator.goToFloor(0);
             elevator.goToFloor(1);
             elevator.goToFloor(2);
+            elevator.goTOFloor(3);
+            elevator.goToFloor(4);
         }); 
         
         // alternative code(in progress) 
@@ -29,20 +31,27 @@
         // variable to track the floors that have requested an elevator    
         var reqFloor = elevator.getPressedFloors()
 
-            
+        //begin with elevator traveling to requested floors
+        elevator.goToFloor(elevator.getPressedFloors())    
+
+        floor.on("up_button_pressed", function() {
+            reqFloor.push(floor.floorNum)
+        }) 
+
+        floor.on("down_button_pressed", function() {
+            reqFloor.push(floor.floorNum)
+        }) 
+
         // Whenever the elevator is idle (has no more queued destinations) ...
         elevator.on("idle", function()
-         {
-            if (elevator.getPressedFloors().length > 0)
-            {
-                for (let i=0; i< reqFloor.length; i++)
-            }     console.log([reqFloor(i)])
-            
-            // let's go to all the floors (or did we forget one?)
-            
+        {
+            // go to the requested floor
+            elevator.goToFloor(reqFloor);
+    
         });
         
     },
+    
     update: function(dt, elevators, floors) {
         // We normally don't need to do anything here
     }
